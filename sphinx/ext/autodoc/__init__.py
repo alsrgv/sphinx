@@ -991,7 +991,8 @@ class FunctionDocumenter(DocstringSignatureMixin, ModuleLevelDocumenter):  # typ
     @classmethod
     def can_document_member(cls, member, membername, isattr, parent):
         # type: (Any, str, bool, Any) -> bool
-        return isfunction(member) or isbuiltin(member)
+        return (isfunction(member) or isbuiltin(member) or
+                (inspect.isroutine(member) and isinstance(parent, ModuleDocumenter)))
 
     def format_args(self):
         # type: () -> str
